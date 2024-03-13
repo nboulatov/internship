@@ -14,4 +14,4 @@ class SettingsPage(BasePage):
 
     def verify_social_media_icons(self, number):
         icon_elements = self.driver.find_elements(*self.SOCIAL_MEDIA_ICONS)
-        assert int(number) <= len(icon_elements), f"\nExpected: {number}. \nActual: {len(icon_elements)}."
+        assert len(icon_elements) >= int(number), f"\nExpected: {number}. \nActual: {len(icon_elements)}."
