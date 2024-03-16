@@ -1,10 +1,6 @@
 from behave import given, when, then
 
 
-@given('I navigate to: https://soft.reelly.io/sign-in')
-def open_google(context):
-    context.app.sign_in_page.open_sign_in_page()
-
 @when('I input username: {username}')
 def input_username(context, username):
     context.app.sign_in_page.input_username(username)

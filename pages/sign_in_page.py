@@ -8,9 +8,6 @@ class SignInPage(BasePage):
     PASSWORD_FIELD = (By.CSS_SELECTOR, '#field')
     CONTINUE_BUTTON = (By.CSS_SELECTOR, '[wized="loginButton"]')
 
-    def open_sign_in_page(self):
-        self.open('https://soft.reelly.io/sign-in')
-
     def input_username(self, username):
         self.input_text(username, *self.USERNAME_FIELD)
 
