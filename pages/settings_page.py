@@ -8,7 +8,7 @@ class SettingsPage(BasePage):
     }
     SOCIAL_GRID = (By.CSS_SELECTOR, '.social-grid')
     SOCIAL_MEDIA_ICONS = (By.CSS_SELECTOR, '.img-social')
-    def click_contact_us_button(self, button):
+    def click_settings_block_menu_button(self, button):
         locator = self.LOCATORS.get(button)
         self.wait_for_clickable_element_and_click(*locator)
 
