@@ -7,36 +7,40 @@ from app.application import Application
 
 
 def browser_init(context, browser_name, headless=False):
-    if browser_name.lower() == 'chrome':
+    if browser_name == 'chrome':
         chrome_options = webdriver.ChromeOptions()
         if headless:
             chrome_options.add_argument('--headless')
+            chrome_options.add_argument("--window-size=1920x1080")
         context.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    elif browser_name.lower() == 'firefox':
+        if not headless:
+            context.driver.maximize_window()
+    elif browser_name == 'firefox':
         firefox_options = webdriver.FirefoxOptions()
         if headless:
             firefox_options.add_argument('--headless')
+            firefox_options.add_argument("--window-size=1920x1080")
         context.driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=firefox_options)
+        if not headless:
+            context.driver.maximize_window()
     else:
         raise ValueError(f"Unsupported browser: {browser_name}.\nPlease use 'chrome' or 'firefox'.")
 
-    context.driver.maximize_window()
+
     context.wait = WebDriverWait(context.driver, 10)
     context.app = Application(context.driver)
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
-    browser_name = context.config.userdata.get('browser', 'chrome')
-    browser_init(context, browser_name)
 
 def before_step(context, step):
-    print('\nStarted step: ', step.name)
+    print('\nCurrent step: ', step.name)
 
 def after_step(context, step):
     if step.status == 'failed':
-        # context.driver.save_screenshot(f"{step.name}_test.png")
         print('\nStep failed: ', step.name)
 
-def after_scenario(context, feature):
+def after_scenario(context, scenario):
+    print('\nEnded scenario: ', scenario.name)
     context.driver.delete_all_cookies()
     context.driver.quit()

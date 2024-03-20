@@ -4,7 +4,7 @@ from features.environment import browser_init
 
 @given('I use browser options: {browser_options}')
 def initialize_browser(context, browser_options):
-    options = browser_options.split(", ")
+    options = browser_options.split(" ")
     browser_name = options[0]
     headless = 'headless' in options
     browser_init(context, browser_name, headless)

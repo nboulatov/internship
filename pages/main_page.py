@@ -1,6 +1,7 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
+
 class MainPage(BasePage):
     MAIN_MENU_TEXT = (By.CSS_SELECTOR, '.h1-menu')
     BLOCK_MENU_LOCATORS = {

@@ -1,10 +1,13 @@
-from selenium.webdriver.support import  expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+
 class BasePage():
+    NAME_TEXT_ACCOUNT = (By.CSS_SELECTOR, '.name_text_account')
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver,10)
+        self.wait = WebDriverWait(self.driver, 10)
 
     def open(self, url):
         self.driver.get(url)
@@ -35,9 +38,10 @@ class BasePage():
             message=f"Element via {locator} is not visible").text
         assert expected_text in actual_text, f"\nExpected: {expected_text}.\nActual: {actual_text}."
 
-    def verify_page_url(self, expected_text_in_url):
+    def verify_page_url(self, expected_text_in_url, timeout=5):
+        self.verify_text('test+nikita+careerist', *self.NAME_TEXT_ACCOUNT)
         url = self.driver.current_url
-        assert expected_text_in_url.lower() in url, f'\nExpected: {expected_text_in_url}.\nActual: {url}.'
+        assert expected_text_in_url.lower() in url.lower(), f'\nExpected: {expected_text_in_url}.\nActual: {url}'
 
     def scroll_to(self, *locator):
         element_to_scroll_to = self.wait.until(
